@@ -1,6 +1,7 @@
 package com.example.FlipkartDummy.controller;
 
 import com.example.FlipkartDummy.model.ApiResponse;
+import com.example.FlipkartDummy.model.LoginRequestDTO;
 import com.example.FlipkartDummy.model.SignUpRequestDTO;
 import com.example.FlipkartDummy.service.IUserService;
 import jakarta.validation.Valid;
@@ -16,9 +17,12 @@ public class IdentityController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/login")
-    public String Login(){
-        return "Logged in...";
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<String>> Login(@RequestBody LoginRequestDTO loginRequestDTO){
+        ApiResponse<String> response=  userService.Login(loginRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        //return "Logged in...";
     }
 
     @GetMapping("/logout")
